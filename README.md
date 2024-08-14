@@ -62,4 +62,31 @@ class Data<K, V> {
 
 > 타입 인자로 기본형은 사용할 수 없다.
 
-## 타입 매개변수 제한
+### 타입 매개변수 제한
+타입 매개변수를 특정 타입으로 제한할 수 있다.
+
+```java
+import generic.animal.Animal;
+
+public class AnimalHospitalV3<T extends Animal> {
+
+  private T animal;
+
+  public void set(T animal) {
+    this.animal = animal;
+  }
+
+  public void checkup() {
+    System.out.println("동물 이름: " + animal.getName());
+    System.out.println("동물 크기: " + animal.getSize());
+    animal.sound();
+  }
+
+  public T bigger(T target) {
+    return animal.getSize() > target.getSize() ? animal : target;
+  }
+}
+```
+타입 매개변수 `T`를 `Animal`과 그 자식만 받을 수 있도록 제한을 두는 것이다. 즉 `T`의 상한이 `Animal`이 되는 것이다.
+자바 컴파일러는 `T`에 입력될 수있는 값의 범위를 예측할 수 있다.
+따라서 `Animal`이 제공하는 `getName()`, `getSize()` 같은 기능을 사용할 수 있다.
