@@ -90,3 +90,24 @@ public class AnimalHospitalV3<T extends Animal> {
 타입 매개변수 `T`를 `Animal`과 그 자식만 받을 수 있도록 제한을 두는 것이다. 즉 `T`의 상한이 `Animal`이 되는 것이다.
 자바 컴파일러는 `T`에 입력될 수있는 값의 범위를 예측할 수 있다.
 따라서 `Animal`이 제공하는 `getName()`, `getSize()` 같은 기능을 사용할 수 있다.
+
+### 제네릭 메서드
+   
+* 정의: `<T> T genericMethod(T t)`
+* 타입 인자 전달: 메서드를 호출하는 시점
+  * 예) GenericMethod.<Integer>genericMethod(i)
+
+
+* 제네릭 메서드는 클래스 전체가 아니라 특정 메서드 단위로 제네릭을 도입할 때 사용한다.
+* 제네릭 메서드를 정의할 때는 메서드의 반환 타입 왼쪽에 다이아몬드를 사용해서 `<T>`와 같이 타입 매개변수를 적어준다.
+* 제네릭 메서드는 메서드를 실제 호출하는 시점에 다이아몬드를 사용해서 `<Integer>`와 같이 타입을 정하고 호출한다.
+
+### 타입 매개변수 제한
+제네릭 메서드도 제네릭 타입과 마찬자기로 타입 매개변수를 제한할 수 있다.
+```java
+public static <T extends Number> T numberMethod(T obj) {
+    System.out.println("bound print: " + obj);
+    return obj;
+}
+```
+
