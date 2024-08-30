@@ -340,3 +340,56 @@ Dequeue - Stack
 Dequeue - Queue
 데이터 추가: `offer()`
 데이터 제거: `poll()`
+
+***
+
+## 컬렉션 프레임워크 - 순회, 정렬
+### Iterable, Iterator
+`Iterable` 인터페이스의 주요 메서드
+```java
+public interface Iteralbe<T> {
+    Iterator<T> iterator();
+}
+```
+* 단순히 `Iterator` 반복자를 반환한다.
+
+`Iterator` 인터페이스의 주요 메서드
+```java
+public interface Iterator<E> {
+    boolean hasNext();
+    E next();
+}
+```
+* `hasNext()`: 다음 요소가 있는지 확인한다. 다음 요소가 없으면 false를 반환한다.
+* `next()`: 다음 요소를 반환한다. 내부에 있는 위치를 다음으로 이동한다.
+
+### Comparable, Comparator
+자바가 기본으로 제공하는 `Integer`, `String` 같은 객체를 제외하고 `MyUser`와 같은 직접 만든 객체를 정렬하려면
+두 객체중에 어떤 객체가 더 큰지 알려줄 방법이 있어야 한다. 이때는 `Comparable` 인터페이스를 구현하면 된다.
+```java
+public interface Comparable<T> {
+    public int compareTo(T o);
+}
+```
+* 자신과 인수로 넘어온 객체를 비교해서 반환하면 된다.
+  * 현재 객체가 인수로 주어진 객체보다 더 작으면 음수, 예(-1)
+  * 두 객체의 크기가 같으면 0
+  * 현재 객체가 인수로 주어진 객체보다 더 크면 양수, 예(1)
+
+#### Arrays.sort(array)
+기본 정렬을 시도한다. 이때 객체가 스스로 가지고 있는 `Comparable`인터페이스를 사용해서 비교한다.
+
+#### 다른 방식으로 정렬
+객체가 가지고 있는 `Comparable` 기본 정렬이 아니라 다른 정렬을 사용하고 싶다면 `Compartor<T>`를 구현한 클래스를 만들어 사용하면된다.
+
+#### Arrays.sort(array, Comparator)
+기본 정렬이 아니라 정렬 방식을 지정하고 싶다면 `Arrays.sort()`의 인수로 비교자(`Comparator`)를 만들어 넘겨주면 된다.
+비교자를 따로 전달하면 객체가 기본으로 가지고 있는 `Comparable`을 무시하고 전달 받은 비교자를 사용한다.
+
+> 주의
+
+만약 `Comparble`도 구현하지 않고, `Comparator`도 제공하지 않으면 다음과 같은 런타임 오류가 발생한다.
+```java
+java.lang.ClassCastException: class collection.compare.MyUser cannot be cast to class java.lang.Comparable
+```
+`Compartor`가 없으니, 객체가 가지고 있는 기본 정렬을 사용해야 한다. 이때 `Comparable`을 사용하게 되는데 `Comparable`가 없어 예외가 발생한다.
