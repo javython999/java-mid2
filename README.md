@@ -393,3 +393,35 @@ public interface Comparable<T> {
 java.lang.ClassCastException: class collection.compare.MyUser cannot be cast to class java.lang.Comparable
 ```
 `Compartor`가 없으니, 객체가 가지고 있는 기본 정렬을 사용해야 한다. 이때 `Comparable`을 사용하게 되는데 `Comparable`가 없어 예외가 발생한다.
+
+### Collection Util
+#### Collections 정렬 관련 메서드
+* `max`: 정렬 기준으로 최대 값을 찾아서 반환한다.
+* `min`: 정렬 기준으로 최소 값을 찾아서 반환한다.
+* `shuffle`: 컬렉션을 랜덤하게 섞는다.
+* `sort`: 정렬 기준으로 컬렉션을 정렬한다.
+* `reverse`: 정렬 기준의 반대로 컬렉션을 정렬한다.
+
+#### 편리한 Collection 생성 메서드
+* `List.of(...)`를 사용하면 컬렉션을 편리하게 생성할 수 있다. 단 이때는 가변이 아니라 불변 컬렉션이 생성된다.
+  * `List`, `Set`, `Map` 모두 `of()` 메서드를 지원한다.
+* 불변 컬렉션은 변경할 수 없다. 변경 메서드를 호출하면 `UnsupportedOperationException` 예외가 발생한다.
+* 빈 가변 리스트는 원하는 컬렉션의 구현체를 직접 생성하면 된다.
+* 빈 불변 리스트는 2가지 생성 방법이 있다.
+  * `Collections.emptyList()`: 자바 5부터 제공되는 기능
+  * `List.of()`: 자바 9부터 제공되는 최신 기능이다.
+  * `List.of()`가 더 간결하고, `List.of(1, 2, 3)`도 불변이기 때문에 사용법에 일관성이 있다. 자바 9 이상을 사용하면 이 기능을 권장한다.
+
+***
+## 컬렉션 프레임워크 정리
+### 선택 가이드
+* 순서가 중요하고 중복이 허용 되는 경우: `List` 인터페이스를 사용. `ArrayList`가 일반적인 선택이지만, 추가/삭제 작업이 앞쪽에서 빈번한 경우에는 `LinkedList`가 성능상 더 좋은 선택이다.
+* 중복을 허용하지 않고 순서가 중요하지 않은 경우: `HasSet`을 사용. 순서를 유지해야 하면 `LinkedHashSet`을, 정렬된 순서가 필요하면 `TreeSet`을 사용
+* 요소를 키-값 쌍으로 저장하려는 경우: `Map` 인터페이스를 사용. 순서가 중요하지 않다면 `HashMap`을, 순서를 유지해야 한다면 `LinkedHashMap`을, 정렬된 순서가 필요하면 `TreeMap`을 사용
+* 요소를 처리하기 전에 보관해야 하는 경우: `Queue`, `Deque` 인터페이스를 사용. 스택, 큐 구조 모두 ArrayDeque를 사용하는 것이 가장 빠르다. 만약 우선순위에 따라 요소를 처리해야 한다면 `PriortyQueue`를 고려하자
+
+### 실무 선택 가이드
+* `List`의 경우 대부분 `ArrayList`를 사용한다.
+* `Set`의 경우 대부분 `HashSet`을 사용한다.
+* `Map`의 경우 대부분 `HashMap`을 사용한다.
+* `Queue`의 경우 대부분 `ArrayDeque`를 사용한다.
